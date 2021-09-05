@@ -6,13 +6,15 @@ import Card from "../Card/Card";
 import { BeatLoader } from "react-spinners";
 
 function Home() {
+  const [getdark, setDark] = useState(false);
   const [userData, setUserData] = useState([]);
   const [inputUser, setInputUser] = useState("");
   const [click, setClick] = useState(false);
   const [isloading, setLoading] = useState(false);
-
+  const [darkMode, setDarkMode] = useState(getdark);
+  const [buttonLabel, setButtonLabel] = useState("Light");
   const showProfile = () => setClick(!click);
-  const hideProfile = () => setClick(false);
+  const enableDarkMode = () => setDarkMode(!darkMode);
 
   const searchUser = async (e) => {
     e.preventDefault();
@@ -49,8 +51,22 @@ function Home() {
     }
   };
 
+  const dark = () => {
+    if (darkMode) {
+      document.body.style.backgroundColor = "#1d1c29";
+      setButtonLabel("Light");
+    } else {
+      document.body.style.backgroundColor = "#fff";
+      setButtonLabel("Dark");
+    }
+  };
+
   return (
-    <div className="user-profile-container">
+    <div
+      className={
+        darkMode ? "user-profile-container active" : "user-profile-container"
+      }
+    >
       <div className="user-profile-content bd-container">
         <div className="top-content">
           <div>
@@ -58,7 +74,15 @@ function Home() {
           </div>
 
           <div>
-            <span>LIGHT</span>
+            <button
+              onClick={() => {
+                enableDarkMode();
+                dark();
+              }}
+            >
+              {buttonLabel}
+            </button>
+            <i className="fas fa-adjust"></i>
           </div>
         </div>
 
@@ -74,6 +98,7 @@ function Home() {
                 onChange={(e) => {
                   setInputUser(e.target.value);
                 }}
+                autoComplete="off"
               />
             </form>
 
