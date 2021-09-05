@@ -46,6 +46,7 @@ input:focus {
   top: 5px;
   border-radius: 4px;
   cursor: pointer;
+  -webkit-appearance: none;
 }
 
 .form-input i {
