@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -6,12 +6,11 @@ import Card from "../Card/Card";
 import { BeatLoader } from "react-spinners";
 
 function Home() {
-  const [getdark, setDark] = useState(false);
   const [userData, setUserData] = useState([]);
   const [inputUser, setInputUser] = useState("");
   const [click, setClick] = useState(false);
   const [isloading, setLoading] = useState(false);
-  const [darkMode, setDarkMode] = useState(getdark);
+  const [darkMode, setDarkMode] = useState(false);
   const [buttonLabel, setButtonLabel] = useState("Light");
   const showProfile = () => setClick(!click);
   const enableDarkMode = () => setDarkMode(!darkMode);
@@ -55,11 +54,27 @@ function Home() {
     if (darkMode) {
       document.body.style.backgroundColor = "#1d1c29";
       setButtonLabel("Light");
+      localStorage.setItem("Mode", "Dark");
     } else {
       document.body.style.backgroundColor = "#fff";
       setButtonLabel("Dark");
+      localStorage.clear();
     }
   };
+
+  useEffect(() => {
+    const Mode = localStorage.getItem("Mode");
+
+    if (Mode) {
+      setDarkMode(false);
+      document.body.style.backgroundColor = "#1d1c29";
+      setButtonLabel("Light");
+    } else {
+      document.body.style.backgroundColor = "#fff";
+      setDarkMode(true);
+      setButtonLabel("Dark");
+    }
+  }, []);
 
   return (
     <div

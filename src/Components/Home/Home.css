@@ -51,6 +51,9 @@
 .user-profile-container.active button {
   color: #000;
 }
+*:focus {
+  outline: none;
+}
 
 /* Dark Mode END */
 
